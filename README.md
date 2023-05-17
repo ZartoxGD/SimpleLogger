@@ -33,6 +33,13 @@ Just call *Print(string message, LogLevel)*... The default log level is debug.
         ZartoxLog.Print("test valid", Enums.LogLevel.Valid); //GREEN
 ```
 
+If you want to set the context of your debug do it this way:
+
+```
+        //This way if you click on the log in the Unity console it will point to the game object that called the log
+        ZartoxLog.Print("CONTEXT", this.gameObject, Enums.LogLevel.Valid);
+```
+
 ## How to set custom colors ?
 Go in the *config* file and change *DebugColor, InfoColor, WarningColor, ErrorColor and ValidColor* to the hex color code you want. 
 Once you chose them: Reload the config with the command *(Tools -> Zartox -> Log -> Reload config)* or launch play mode. 
@@ -54,6 +61,7 @@ In Tools → Zartox → Log you have:
 ---------------------------------------
 ### 1.0.1: 
         - Added custom colors via the config file
+        - Added context for the Unity console
         
 
 
