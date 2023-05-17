@@ -10,7 +10,16 @@ using Enums;
 public static class ZartoxLog
 {
 
+    //TODO: Rajouter un contexte pour les objets
+
     private static bool logToFile = false;
+
+    //Custom colors
+    private static string debugColor = "#808080ff";
+    private static string infoColor = "#00ffffff";
+    private static string warningColor = "#ffff00ff";
+    private static string errorColor = "#ff0000ff";
+    private static string validColor = "#00ff00ff";
 
     static ZartoxLog()
     {
@@ -22,31 +31,31 @@ public static class ZartoxLog
         Print("Zartox Log Initialised...", LogLevel.Valid);
     }
 
+    private static string GetColorCode(string color)
+    {
+        return $"<color={color}>";
+    }
+
     public static void Print(string message, LogLevel level=LogLevel.Debug)
     {
-        string colorCode = "";
         string formattedMessage = "";
 
         switch (level)
         {
             case LogLevel.Debug:
-                colorCode = "<color=#808080ff>"; // Black
-                formattedMessage = $"{colorCode}[{level.ToString().ToUpper()}] {message}</color>";
+                formattedMessage = $"{GetColorCode(debugColor)}[{level.ToString().ToUpper()}] {message}</color>";
                 Debug.Log(formattedMessage);
                 break;
             case LogLevel.Info:
-                colorCode = "<color=#00ffffff>"; // White
-                formattedMessage = $"{colorCode}[{level.ToString().ToUpper()}] {message}</color>";
+                formattedMessage = $"{GetColorCode(infoColor)}[{level.ToString().ToUpper()}] {message}</color>";
                 Debug.Log(formattedMessage);
                 break;
             case LogLevel.Warning:
-                colorCode = "<color=#ffff00ff>"; // Yellow
-                formattedMessage = $"{colorCode}[{level.ToString().ToUpper()}] {message}</color>";
+                formattedMessage = $"{GetColorCode(warningColor)}[{level.ToString().ToUpper()}] {message}</color>";
                 Debug.LogWarning(formattedMessage);
                 break;
             case LogLevel.Error:
-                colorCode = "<color=#ff0000ff>"; // Red
-                formattedMessage = $"{colorCode}[{level.ToString().ToUpper()}] {message}</color>";
+                formattedMessage = $"{GetColorCode(errorColor)}[{level.ToString().ToUpper()}] {message}</color>";
 
                 if(logToFile)
                     FileLogger(message, level);
@@ -54,8 +63,7 @@ public static class ZartoxLog
                 Debug.LogError(formattedMessage);
                 break;
             case LogLevel.Valid:
-                colorCode = "<color=#00ff00ff>"; // Green
-                formattedMessage = $"{colorCode}[{level.ToString().ToUpper()}] {message}</color>";
+                formattedMessage = $"{GetColorCode(validColor)}[{level.ToString().ToUpper()}] {message}</color>";
                 Debug.Log(formattedMessage);
                 break;
         }
@@ -105,7 +113,7 @@ public static class ZartoxLog
         Print($"[Zartox Log] : Deleted today's logs ({counter / 2} files) in /Logs...", LogLevel.Warning);
     }
     
-    [MenuItem("Tools/Zartox/Log/Delete every Logs")]
+    [MenuItem("Tools/Zartox/Log/Delete every Log")]
     public static void DeleteEveryLogs()
     {
         string[] filePaths = Directory.GetFiles(Application.dataPath + "/Logs");
@@ -151,6 +159,13 @@ public static class ZartoxLog
         using (StreamWriter sw = File.CreateText(configFile))
         {
             sw.WriteLine("LogToFile=True");
+
+            //Custom colors:
+            sw.WriteLine("DebugColor=#808080ff");
+            sw.WriteLine("InfoColor=#00ffffff");
+            sw.WriteLine("WarningColor=#ffff00ff");
+            sw.WriteLine("ErrorColor=#ff0000ff");
+            sw.WriteLine("ValidColor=#00ff00ff");
         }
 
         AssetDatabase.Refresh();
@@ -178,10 +193,22 @@ public static class ZartoxLog
             }
 
             if (configValues.ContainsKey("LogToFile"))
-            {
-                //bool.TryParse(configValues["logToFile"], out logToFile);
                 logToFile = bool.Parse(configValues["LogToFile"]);
-            }
+
+            if (configValues.ContainsKey("DebugColor"))
+                debugColor = configValues["DebugColor"];
+            
+            if (configValues.ContainsKey("InfoColor"))
+                infoColor = configValues["InfoColor"];
+            
+            if (configValues.ContainsKey("WarningColor"))
+                warningColor = configValues["WarningColor"];
+            
+            if (configValues.ContainsKey("ErrorColor"))
+                errorColor = configValues["ErrorColor"];
+            
+            if (configValues.ContainsKey("ValidColor"))
+                validColor = configValues["ValidColor"];
 
             Print("[Zartox Log] : Configuration reloaded !", LogLevel.Valid);
             Print("[Zartox Log] : Active config: ", LogLevel.Info);
