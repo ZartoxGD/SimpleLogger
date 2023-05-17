@@ -36,6 +36,42 @@ public static class ZartoxLog
         return $"<color={color}>";
     }
 
+    public static void Print(string message, GameObject context, LogLevel level=LogLevel.Debug)
+    {
+        string formattedMessage = "";
+
+        switch (level)
+        {
+            case LogLevel.Debug:
+                formattedMessage = $"{GetColorCode(debugColor)}[{level.ToString().ToUpper()}] {message}</color>";
+                Debug.Log(formattedMessage, context);
+                break;
+            case LogLevel.Info:
+                formattedMessage = $"{GetColorCode(infoColor)}[{level.ToString().ToUpper()}] {message}</color>";
+                Debug.Log(formattedMessage, context);
+                break;
+            case LogLevel.Warning:
+                formattedMessage = $"{GetColorCode(warningColor)}[{level.ToString().ToUpper()}] {message}</color>";
+                Debug.LogWarning(formattedMessage, context);
+                break;
+            case LogLevel.Error:
+                formattedMessage = $"{GetColorCode(errorColor)}[{level.ToString().ToUpper()}] {message}</color>";
+
+                if(logToFile)
+                    FileLogger(message, level);
+
+                Debug.LogError(formattedMessage, context);
+                break;
+            case LogLevel.Valid:
+                formattedMessage = $"{GetColorCode(validColor)}[{level.ToString().ToUpper()}] {message}</color>";
+                Debug.Log(formattedMessage, context);
+                break;
+        }
+
+        if(level != LogLevel.Error && logToFile)
+            FileLogger(message, level);
+    }
+
     public static void Print(string message, LogLevel level=LogLevel.Debug)
     {
         string formattedMessage = "";

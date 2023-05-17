@@ -8,7 +8,9 @@ public class TEST : MonoBehaviour
     void Start()
     {
         ZartoxLog.Init();
-        DebugEveryTypeOfDebugInLogClasse();
+        //DebugEveryTypeOfDebugInLogClasse();
+
+        ZartoxLog.Print("CONTEXTE", this.gameObject, Enums.LogLevel.Valid);
     }
 
     private void DebugEveryTypeOfDebugInLogClasse()
