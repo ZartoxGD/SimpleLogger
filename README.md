@@ -34,7 +34,7 @@ Just call *Print(string message, LogLevel)*... The default log level is debug.
 ```
 
 ## How to set custom colors ?
-Go in the *config* file and change *DebugColor, InfoColor, WarningColor, ErrorColor and ValidColor to the hex color code you want. 
+Go in the *config* file and change *DebugColor, InfoColor, WarningColor, ErrorColor and ValidColor* to the hex color code you want. 
 Once you chose them: Reload the config with the command *(Tools -> Zartox -> Log -> Reload config)* or launch play mode. 
 
 ## Menu:
