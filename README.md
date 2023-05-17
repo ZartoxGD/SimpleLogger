@@ -23,6 +23,7 @@ Just call *Print(string message, LogLevel)*... The default log level is debug.
 
 ```
         ZartoxLog.Print("test debug", Enums.LogLevel.Debug); //BLACK
+        //The line above is the same as ZartoxLog.Print("test debug"); Since the default LogLevel is Debug
 
         ZartoxLog.Print("test info", Enums.LogLevel.Info); //CYAN
 
