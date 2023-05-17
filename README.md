@@ -47,5 +47,16 @@ In Tools → Zartox → Log you have:
 5. *Reload config*: Load the config file in the script **(not necessary since it's loaded every time you enter play mode)**
 
 
+## Changelog:
+---------------------------------------
+### 1.0.0:
+        - Initial release
+---------------------------------------
+### 1.0.1: 
+        - Added custom colors via the config file
+        
+
+
+
 
 
